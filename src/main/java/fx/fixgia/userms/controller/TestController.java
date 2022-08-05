@@ -14,15 +14,15 @@ public class TestController {
 }
 
     @GetMapping("/profile")
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('USER')")
     public String profile() {
-    return "profile";
+    return "profile user";
 }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('Admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     public String admin() {
-        return "profile";
+        return "profile admin";
     }
 
 }

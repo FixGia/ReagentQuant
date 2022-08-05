@@ -17,7 +17,7 @@ public class JwtHelper {
 
     private final Key key;
 
-    public JwtHelper(@Value("${jwt.secret") String secret) {
+    public JwtHelper(@Value("${jwt.secret}") String secret) {
         key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 

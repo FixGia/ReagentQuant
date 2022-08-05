@@ -15,7 +15,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -88,20 +88,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+   // @Override
+ //   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        UserEntity user = userRepository.findUserEntityByEmail(email);
+   //     UserEntity user = userRepository.findUserEntityByEmail(email);
 
-        if(user == null) {
-            log.error("Service : loadUserByUsername User {} - FAIL", email);
-            throw new UsernameNotFoundException("User not exist in DB");
-        } else {
-            log.info("Service : loadUserByUsername User {} - FAIL", email);
-            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.getRole()));
-            return new User(user.getEmail(),user.getPassword(),authorities);
-        }
+     //   if(user == null) {
+       //     log.error("Service : loadUserByUsername User {} - FAIL", email);
+        //    throw new UsernameNotFoundException("User not exist in DB");
+       // } else {
+        //    log.info("Service : loadUserByUsername User {} - FAIL", email);
+          //  Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+          //  authorities.add(new SimpleGrantedAuthority(user.getRole()));
+          //  return new User(user.getEmail(),user.getPassword(),authorities);
+       // }
 
-    }
+   // }
 }

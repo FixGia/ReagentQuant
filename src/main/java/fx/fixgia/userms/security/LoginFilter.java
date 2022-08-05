@@ -2,7 +2,7 @@ package fx.fixgia.userms.security;
 
 
 
-import fx.fixgia.userms.model.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,24 +22,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-
+@RequiredArgsConstructor
 public class LoginFilter extends OncePerRequestFilter {
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtHelper jwtHelper;
 
-    public LoginFilter(AuthenticationManager authenticationManager, JwtHelper jwtHelper) {
-        this.authenticationManager = authenticationManager;
-        this.jwtHelper = jwtHelper;
-    }
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtHelper jwtHelper;
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)throws ServletException, IOException {
 
-        String email = request.getHeader("username");
-        String password = request.getHeader("password");
-        Authentication authenticated = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,password));
+        var username = request.getHeader("username");
+        var password = request.getHeader("password");
+
+        var authenticated = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
 
 
         response.setHeader(HttpHeaders.AUTHORIZATION, createJwtToken(authenticated));
@@ -52,7 +50,7 @@ public class LoginFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
 
         String method = request.getMethod();
         String uri = request.getRequestURI();
